@@ -9,7 +9,25 @@ spring:
   h2:
     console:
       enabled: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 343701664045-ub3egdiemd8p7jp018mf6se709aeqgh2.apps.googleusercontent.com
+            client-secret: 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
+
+          github:
+            client-id: 57407470bd0ed8a8815d
+            client-secret: de20ff6c5e462b13184097cbc65cadedb8e14644
+
+        provider:
+          google:
+            user-name-attribute: email
+          github:
+            user-name-attribute: login
 
 server:
   port: 8090
+
 
