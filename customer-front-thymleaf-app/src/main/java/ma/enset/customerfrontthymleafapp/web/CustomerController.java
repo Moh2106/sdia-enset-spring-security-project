@@ -2,25 +2,25 @@ package ma.enset.customerfrontthymleafapp.web;
 
 import ma.enset.customerfrontthymleafapp.entities.Customer;
 import ma.enset.customerfrontthymleafapp.repositories.CustomerRepositories;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
 @Controller
 public class CustomerController {
-    private CustomerRepositories customerRepositories;
+    private final CustomerRepositories customerRepositories;
 
     public CustomerController(CustomerRepositories customerRepositories) {
         this.customerRepositories = customerRepositories;
     }
 
     @GetMapping("/customers")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String customers(Model model){
         List<Customer> customerList = customerRepositories.findAll();
         model.addAttribute("customers", customerList);
@@ -41,5 +41,10 @@ public class CustomerController {
     @GetMapping("/")
     public String home(){
         return "index";
+    }
+
+    @GetMapping("/NotAuthorized")
+    public String notAuthorized(){
+        return "notAuthorized";
     }
 }

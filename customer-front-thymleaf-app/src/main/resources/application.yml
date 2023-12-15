@@ -21,11 +21,27 @@ spring:
             client-id: 57407470bd0ed8a8815d
             client-secret: de20ff6c5e462b13184097cbc65cadedb8e14644
 
+          keycloak:
+            client-name: keycloak
+            client-id: sdia-customer-app
+            client-secret: HSMPTdnLiNxXNSELqHOeGbqgBnfYq0d7
+            scope:
+              - openid
+              - profile
+              - email
+              - offline_access
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:8090/login/oauth2/code/sdia-customer-app
+
+
         provider:
           google:
             user-name-attribute: email
           github:
             user-name-attribute: login
+          keycloak:
+            issuer-uri: http://localhost:8080/realms/sdia-app-realm
+            user-name-attribute: preferred_username
 
 server:
   port: 8090
