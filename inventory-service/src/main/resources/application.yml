@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: inventory-service
+  datasource:
+    url: jdbc:h2:mem:products-db
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8080/realms/sdia-app-realm/protocol/openid-connect/certs
+          issuer-uri:  http://localhost:8080/realm/sdia-app-realm
+
+server:
+  port: 8098
+
+
+

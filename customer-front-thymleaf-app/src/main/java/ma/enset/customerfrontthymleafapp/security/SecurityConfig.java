@@ -31,9 +31,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(Customizer.withDefaults())
-                .authorizeHttpRequests(or -> or.requestMatchers("/", "/webjars/**","/h2-console/**").permitAll())
+                .authorizeHttpRequests(or -> or.requestMatchers("/","/oauth2Login" ,"/webjars/**","/h2-console/**").permitAll())
                 .authorizeHttpRequests(or -> or.anyRequest().authenticated())
-                .oauth2Login(Customizer.withDefaults())
+                .headers(h -> h.frameOptions(fo -> fo.disable()))
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"))
+                .oauth2Login(al-> al
+                        .loginPage("/oauth2Login")
+                        .defaultSuccessUrl("/")
+                )
                 .logout((lagout)->
                         lagout
                                 .logoutSuccessHandler(oidcLogoutSuccessHandler())
