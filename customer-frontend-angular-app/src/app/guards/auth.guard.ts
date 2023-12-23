@@ -1,4 +1,9 @@
 import { CanActivateFn } from '@angular/router';
+
+/*export const authGuard: CanActivateFn = (route, state) => {
+  return true;
+};*/
+
 import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
@@ -12,7 +17,7 @@ import { KeycloakAuthGuard, KeycloakService } from 'keycloak-angular';
 })
 export class AuthGuard extends KeycloakAuthGuard {
   constructor(
-    protected readonly router: Router,
+    protected override readonly router: Router,
     protected readonly keycloak: KeycloakService
   ) {
     super(router, keycloak);
@@ -30,7 +35,7 @@ export class AuthGuard extends KeycloakAuthGuard {
     }
 
     // Get the roles required from the route.
-    const requiredRoles = route.data.roles;
+    const requiredRoles = route.data['roles'];
 
     // Allow the user to proceed if no additional roles are required to access the route.
     if (!Array.isArray(requiredRoles) || requiredRoles.length === 0) {
